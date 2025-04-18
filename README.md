@@ -11,18 +11,12 @@ A simple command-line implementation of the classic Tic-Tac-Toe game written in 
 - [Future Improvements](#future-improvements)
 
 ## Overview
-
 This is a text-based implementation of Tic-Tac-Toe where two players take turns marking spaces on a 3×3 grid. The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row wins the game.
 
 ## Features
-
 - Interactive command-line interface
 - Two-player gameplay (X and O)
 - Move validation to prevent illegal moves
-- Undo functionality to revert the last move
-- Game statistics tracking (wins, losses, draws)
-- Option to reset the game or quit at any time
-- Clear visual representation of the game board
 
 ## Installation
 
@@ -68,11 +62,3 @@ Implements the `Board` class that represents the game board, tracks moves, and c
 
 ### player.py
 Defines the `Player` class that stores player information and statistics.
-
-## Future Improvements
-
-- Add an AI opponent with adjustable difficulty levels
-- Implement a graphical user interface (GUI)
-- Add network play functionality for remote games
-- Save game statistics between sessions
-- Add replay functionality to review past games
