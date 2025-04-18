@@ -8,7 +8,7 @@ class Board:
         self.col_sum = [0] * self.n
         self.diagonal_sum = 0
         self.reverse_diag_sum = 0
-        self.current_player = None
+        self.curr_player = None
         self.move_history = []
     
     def show_board(self): 
