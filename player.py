@@ -1,3 +1,4 @@
+
 class Player:
     def __init__(self, player_id, symbol) -> None:
         self.id = player_id
@@ -26,9 +27,4 @@ class Player:
         self.losses += 1
     
     def add_draw(self):
-        self.draws += 0
-
-
-
-        
-    
+        self.draws += 1

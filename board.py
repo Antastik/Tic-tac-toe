@@ -1,5 +1,3 @@
-import player
-
 class Board:
     def __init__(self):
         self.n = 3
@@ -31,28 +29,28 @@ class Board:
         return self.board
     
     def move(self, player_obj, row, col):
-        player_val = 1 if player_obj.symbol() == 'X' else -1
-        if row < 0 or col <0 or row >= self.n or col >= self.n:
-            print("Out of bounds!")
+        if row < 0 or col < 0 or row >= self.n or col >= self.n:
             return False
         
         if self.board[row][col] != 0:
-            print("Invalid move!")
+            return False
 
-        self.board[row][col] != player_val
+        player_val = 1 if player_obj.symbol() == 'X' else -1
+        
+        # Make the move
+        self.board[row][col] = player_val
         self.curr_player = player_obj
         self.move_history.append((player_obj, row, col))
 
         self.row_sum[row] += player_val
         self.col_sum[col] += player_val
 
-        # calculate only the current move :reducing complexity.
         if row == col:
             self.diagonal_sum += player_val
         if row == self.n - 1 - col:
             self.reverse_diag_sum += player_val
 
-        # Winning condition
+        # Winning Condition
         if (
             abs(self.row_sum[row]) == self.n or 
             abs(self.col_sum[col]) == self.n or
@@ -60,22 +58,30 @@ class Board:
             abs(self.reverse_diag_sum) == self.n):
             return True
         
-        return False
+        return None  
     
     def undo_move(self):
-        if self.move_history:
-            player_obj, row , col = self.move_history.pop()
-            player_val = 1 if player_obj.symbol() == 'X' else -1
-            self.row_sum[row] -= player_val
-            self.col_sum[col] -= player_val
-
-            if row == col:
-                self.diagonal_sum -= player_val
-            if row == self.n - 1 - col:
-                self.reverse_diag_sum -= player_val
+        if not self.move_history:
+            return False
             
-            return True
-        return False
+        player_obj, row, col = self.move_history.pop()
+        player_val = 1 if player_obj.symbol() == 'X' else -1
+        
+        # Clear the board position
+        self.board[row][col] = 0
+
+        self.row_sum[row] -= player_val
+        self.col_sum[col] -= player_val
+
+        if row == col:
+            self.diagonal_sum -= player_val
+        if row == self.n - 1 - col:
+            self.reverse_diag_sum -= player_val
+        
+        # Update current player to the previous one
+        self.curr_player = self.move_history[-1][0] if self.move_history else None
+        
+        return True
     
     def check_winner(self):
         for i in range(self.n):
@@ -108,7 +114,7 @@ class Board:
     def reset(self):
         self.board = [[0 for _ in range(self.n)] for _ in range(self.n)]
         self.row_sum = [0] * self.n
-        self.row_sum = [0] * self.n
+        self.col_sum = [0] * self.n
         self.diagonal_sum = 0
         self.reverse_diag_sum = 0
         self.curr_player = None
